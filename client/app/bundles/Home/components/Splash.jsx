@@ -1,12 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import * as subscriptionActions from '../actions/subscription'
 
-export default class Splash extends React.Component {
+class Splash extends React.Component {
   constructor () {
     super();
   }
 
   submitForm() {
-    console.log("submitted form");
+    this.props.createSubscription({
+      greeting: "Hello",
+    });
   }
 
   render() {
@@ -24,3 +28,18 @@ export default class Splash extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    subscription: state.subscription
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createSubscription: subscription => { dispatch(subscriptionActions.createSubscription(subscription)) }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Splash);
